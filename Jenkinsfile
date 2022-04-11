@@ -21,7 +21,7 @@ pipeline {
         stage('3-Test') {
             steps {
                 echo '3 - Test project'
-                sh 'mvn test'
+                //sh 'mvn test'
             }
             
             post{
@@ -49,14 +49,14 @@ pipeline {
                 sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker stop backTransport || true'
                 sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker rm backTransport || true'
                 sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker rmi jaujau31/backTransport || true'
-                sh 'docker rmi demo-isika || true'
+                sh 'docker rmi backTransport || true'
             }
             
         } 
         stage('6-Docker build') {
             steps {
                 echo 'Docker Build'
-                sh 'docker build -t backTransport . ||true' //lance le container sur le docker de test
+                sh 'docker build -t backTransport . ' //lance le container sur le docker de test
             }
             
         }
@@ -64,7 +64,7 @@ pipeline {
         stage('7-Tag image') {
             steps {
                 echo '9 - Tag image'
-                sh 'docker tag demo-isika jaujau31/backTransport'     
+                sh 'docker tag backTransport jaujau31/backTransport'     
             }
             
         }
