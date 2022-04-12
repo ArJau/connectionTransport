@@ -47,17 +47,17 @@ pipeline {
         stage('5-Nettoyage des containers') {//suppression des anciens containers de la machine docker de test()192.168.33.11) et de la machine jenkins
             steps {
                 echo 'Clean docker image and container'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker stop backTransport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker rm backTransport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker rmi jaujau31/backTransport || true'
-                sh 'docker rmi backTransport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker stop back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker rm back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker rmi jaujau31/back-transport || true'
+                sh 'docker rmi back-transport || true'
             }
             
         } 
         stage('6-Docker build') {
             steps {
                 echo 'Docker Build'
-                sh 'docker build -t backTransport . ' //lance le container sur le docker de test
+                sh 'docker build -t back-transport . ' //lance le container sur le docker de test
             }
             
         }
@@ -65,7 +65,7 @@ pipeline {
         stage('7-Tag image') {
             steps {
                 echo '9 - Tag image'
-                sh 'docker tag backTransport jaujau31/backTransport'     
+                sh 'docker tag back-transport jaujau31/back-transport'     
             }
             
         }
@@ -79,13 +79,13 @@ pipeline {
         stage('9-Push image dockerhub') {
             steps {
                 echo '11 - Push image dockerhub'
-                sh 'docker push jaujau31/backTransport'   
+                sh 'docker push jaujau31/back-transport'   
             }
         }
         stage('10-Run Container to local') {
             steps {
                 echo 'Docker run'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker run -d --name backTransport -p8080:8080 jaujau31/backTransport'   
+                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker run -d --name back-transport -p8080:8080 jaujau31/back-transport'   
             }
             
         }
@@ -96,10 +96,10 @@ pipeline {
               }
             steps {
                 sh 'echo "Deploy into Prod"'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker stop backTransport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker rm backTransport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker rmi jaujau31/backTransport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker run -d --name backTransport -p8080:8080 jaujau31/backTransport'   
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker stop back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker rm back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker rmi jaujau31/back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker run -d --name back-transport -p8080:8080 jaujau31/back-transport'   
             
 
             }
