@@ -19,7 +19,7 @@ pipeline {
             }
         }
         stage('3-Test') {
-            steps {g
+            steps {
                 echo '3 - Test project'
                 //sh 'mvn test'
             }
