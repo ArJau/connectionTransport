@@ -27,6 +27,7 @@ pipeline {
             post{
                 success {//publication des tests
                     //junit 'target/surefire-reports/*.xml'
+                    echo 'junit target/surefire-reports/*.xml'
                 }
             }
         }
