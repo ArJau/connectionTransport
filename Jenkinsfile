@@ -19,14 +19,14 @@ pipeline {
             }
         }
         stage('3-Test') {
-            steps {
+            steps {g
                 echo '3 - Test project'
                 //sh 'mvn test'
             }
             
             post{
                 success {//publication des tests
-                    junit 'target/surefire-reports/*.xml'
+                    //junit 'target/surefire-reports/*.xml'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
             }
         }
         
-        stage('5-Nettoyage des containers') {
+        stage('5-Nettoyage des containers') {//suppression des anciens containers de la machine docker de test()192.168.33.11) et de la machine jenkins
             steps {
                 echo 'Clean docker image and container'
                 sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker stop backTransport || true'
