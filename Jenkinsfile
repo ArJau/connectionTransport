@@ -96,10 +96,10 @@ pipeline {
               }
             steps {
                 sh 'echo "Deploy into Prod"'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker stop back-transport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker rm back-transport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker rmi jaujau31/back-transport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@35.180.117.10 sudo docker run -d --name back-transport -p8080:8080 jaujau31/back-transport'   
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.188.54.57 sudo docker stop back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.188.54.57 sudo docker rm back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.188.54.57 sudo docker rmi jaujau31/back-transport || true'
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.188.54.57 sudo docker run -d --name back-transport -p8080:8080 jaujau31/back-transport'   
             
 
             }
