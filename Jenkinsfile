@@ -14,9 +14,9 @@ pipeline {
         }
 		stage('2-Changer URL de prod') {
             steps {
-                sh 'sed -i -E -r "s|.*spring.datasource.url.*|spring.datasource.url=$MYSQL_PROD_URL|g" /src/main/resources/application.properties'
-                sh 'sed -i -E -r "s|.*spring.datasource.username.*|spring.datasource.username=$MYSQL_PROD_USR|g" /src/main/resources/application.properties'
-                sh 'sed -i -E -r "s|.*spring.datasource.password.*|spring.datasource.password=$MYSQL_PROD_PWD|g" /src/main/resources/application.properties'
+                sh 'sed -i -E -r "s|.*spring.datasource.url.*|spring.datasource.url=$MYSQL_PROD_URL|g" src/main/resources/application.properties'
+                sh 'sed -i -E -r "s|.*spring.datasource.username.*|spring.datasource.username=$MYSQL_PROD_USR|g" src/main/resources/application.properties'
+                sh 'sed -i -E -r "s|.*spring.datasource.password.*|spring.datasource.password=$MYSQL_PROD_PWD|g" src/main/resources/application.properties'
             }
         }
         stage('3-Compile') {
