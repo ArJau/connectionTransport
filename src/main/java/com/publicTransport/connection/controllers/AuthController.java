@@ -73,6 +73,12 @@ public class AuthController {
 												 roles));
 	}
 	
+	/**
+	 * Api pour que l'utilisateur s'enregistre à l'application
+	 * @param signUpRequest
+	 * @return
+	 */
+	
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
