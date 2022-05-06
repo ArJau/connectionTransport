@@ -92,7 +92,7 @@ pipeline {
         stage('11-Run Container to local') {
             steps {
                 echo 'Docker run'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker run -d --name back-transport -p8080:8080 jaujau31/back-transport'   
+                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.11 sudo docker run -d --name back-transport -p8085:8085 jaujau31/back-transport'   
             }
             
         }
@@ -106,7 +106,7 @@ pipeline {
                 sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.237.111.102 sudo docker stop back-transport || true'
                 sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.237.111.102 sudo docker rm back-transport || true'
                 sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.237.111.102 sudo docker rmi jaujau31/back-transport || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.237.111.102 sudo docker run -d --name back-transport -p8080:8080 jaujau31/back-transport'   
+                sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@15.237.111.102 sudo docker run -d --name back-transport -p8085:8085 jaujau31/back-transport'   
             }
         }
 
