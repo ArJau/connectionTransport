@@ -27,23 +27,46 @@ public class FavoriController {
 	@PostMapping("/save")
 	public @ResponseBody void saveFavori(@RequestBody Iterable<Favori> lstFavori){
 		for (Favori favori : lstFavori) {
-			Favori optFavori = favoriRepo.findByUserIdAndNoReseauId(favori.getUser().getId(), favori.getNoReseauId());
-			if (optFavori==null)
+			Favori optFavori = findFavori(favori);
+			if (optFavori==null) {
 				favoriRepo.save(favori);
+			}
 		}
 	}
 	
 	@PostMapping("/delete")
 	public @ResponseBody void deleteFavori( @RequestBody Iterable<Favori> lstFavori){
 		for (Favori favori : lstFavori) {
-			favori = favoriRepo.findByUserIdAndNoReseauId(favori.getUser().getId(), favori.getNoReseauId());
-			favoriRepo.delete(favori);
+			Favori optFavori = findFavori(favori);
+			if (optFavori!=null) {
+				favoriRepo.delete(optFavori);
+			}
 		}
 	}
 	
 	@GetMapping(path = "/{userId}")
 	public @ResponseBody Iterable<Favori> getFavori(@PathVariable Long userId){
 		return favoriRepo.findByUserId(userId);
+	}
+	
+	private Favori findFavori(Favori favori) {
+		if (!isNullOuVide(favori.getNoReseauId())) {
+			return favoriRepo.findByUserIdAndNoReseauId(favori.getUser().getId(), favori.getNoReseauId());
+		}else if (!isNullOuVide(favori.getReseauId()) && !isNullOuVide(favori.getRouteId()) && !isNullOuVide(favori.getStopId())) {
+			return favoriRepo.findByUserIdAndReseauIdAndRouteIdAndStopId(favori.getUser().getId(), favori.getReseauId(), favori.getRouteId(),  favori.getStopId() );
+		}else if (!isNullOuVide(favori.getReseauId()) && !isNullOuVide(favori.getRouteId())) {
+			return favoriRepo.findByUserIdAndReseauIdAndRouteId(favori.getUser().getId(), favori.getReseauId(), favori.getRouteId());
+		}else if (!isNullOuVide(favori.getReseauId())) {
+			return favoriRepo.findByUserIdAndReseauId(favori.getUser().getId(), favori.getReseauId());
+		}
+		
+		return null;
+		
+			
+	}
+	
+	private boolean isNullOuVide(String val) {
+		return val==null || "".equals(val);
 	}
 	
 }
